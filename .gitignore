@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environnement virtuel
+mini-siem-env/
+env/
+venv/
+
+# Logs et fichiers générés
+logs.csv
+filtered_logs.csv
+
+# Fichiers système
+.DS_Store
+Thumbs.db
