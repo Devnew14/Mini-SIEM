@@ -1,0 +1,46 @@
+Ce que j'apprends à  travers ce projet :
+
+generate_logs permet de génerer un faux fichier pour tester. C'est a dire, on genere 200 timestamp espaces de 15 min, qui contient aleatoirement un  type d'alerte, une IP interne, et un niveau de gravité.
+
+logs permet de representer les evenements (date/heure, le type d'alerte, la machine source et la gravité)
+Par exemple :
+    malware_detected → virus détecté
+    port_scan → scan de ports (reconnaissance)
+    login_failed → tentative de connexion échée
+    cpu_spike → pic CPU (potentielle anomalie)
+
+    C'est le point de départ pour tout les analyses
+
+
+
+On veut savoir maintenant comment analyser les logs et détecter les anomalies ?
+on compte alors les alertes avec alert_count. Il permet de savoir quels problemes vient le plus souvent.
+
+
+Ensuite on transforme le texte en format date pour faire des regroupements temporels. Puis on regroupe par heure et type d'alerte.
+On definit une regle : si il y a plus de 10 alertes identiques en 1 heure, ca reprensente une anomalie.
+Par exemple : 15h → 15 malware_detected → suspect
+
+filtered_logs permet de filtrer les alertes faibles en ne gardant que les plus importantes. Ce qui permet d'avoir uniquement les alertes les plus graves regoupé en un seul fichier.
+
+
+visualize_alerts permet de d'afficher les resultats sous forme de graphe avec :
+ en axe X = le type d'alerte
+ en axe y = le nombre d'alerte
+
+
+Vision globale du projet et fonctionnement:
+
+generate_logs.py
+        ↓
+logs.csv (brut)
+        ↓
+analyse + détection anomalies
+        ↓
+filtered_logs.py
+        ↓
+filtered_logs.csv (nettoyé)
+        ↓
+visualize_alerts.py
+        ↓
+graphique 
